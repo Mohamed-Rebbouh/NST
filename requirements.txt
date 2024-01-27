@@ -1,0 +1,7 @@
+torch 
+torchvision 
+streamlit 
+rich
+PIL
+numpy
+pathlib
