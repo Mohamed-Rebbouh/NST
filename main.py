@@ -1,3 +1,6 @@
+import os 
+os.system('pip install torch')
+os.system('pip install torchvision')
 import streamlit as st 
 import tempfile
 #import torchvision
