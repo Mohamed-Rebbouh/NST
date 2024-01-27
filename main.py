@@ -4,6 +4,7 @@ os.system('pip install torchvision')
 import streamlit as st 
 import tempfile
 #import torchvision
+import torch
 from torch import optim
 from torchvision import models
 from nst import device,NSTCost,img_size
