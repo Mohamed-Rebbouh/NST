@@ -1,5 +1,3 @@
-!pip install torch 
-!pip install torchvision 
 import streamlit as st 
 import tempfile
 #import torchvision
