@@ -10,12 +10,22 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 img_size = 512, 512
 
 def compute_content_cost(content_output, generated_output):
-    # shape = (n_c, n_h, n_w)
     if content_output.shape != generated_output.shape:
         raise Exception("content_output and generated_output have different shapes")
+    
+    # Use torch.square() to compute the element-wise square of the difference
+    squared_difference = torch.square(content_output - generated_output)
+    
+    # Use .sum() to calculate the sum of squared differences
+    sum_squared_difference = squared_difference.sum()
+
+    # shape = (n_c, n_h, n_w)
     n_c, n_h, n_w = content_output.shape
     cft = 1 / (4 * n_h * n_w * n_c)
-    return cft * ((content_output - generated_output) ** 2).sum()
+    
+    # Multiply by the normalization factor and return the result
+    return cft * sum_squared_difference
+
 
 
 def compute_layer_style_cost(style_output, generated_output):
