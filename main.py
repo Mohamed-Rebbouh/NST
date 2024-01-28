@@ -22,7 +22,7 @@ beta = 2
 
 col1, col2 = st.columns(spec=2, gap='medium')
 col1.write('<h3>Upload a style image</h3>', unsafe_allow_html=True)
-col1.write(f'{divice}')
+col1.write(f'{device}')
 style_image = col1.file_uploader('Style', type=['png', 'jpg'], label_visibility='hidden')
 col2.write('<h3>Upload a content image</h3>', unsafe_allow_html=True)
 content_image = col2.file_uploader('Content', type=['png', 'jpg'], label_visibility='hidden')
