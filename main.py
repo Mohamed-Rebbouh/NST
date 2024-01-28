@@ -4,7 +4,7 @@ from torch import optim
 from torchvision import models
 from nst import device,NSTCost,img_size,model
 
-
+model = models.vgg19(pretrained=True).features.requires_grad_(False).eval().to(device)
 layers = list(model.children())
 
 content_layer_idx = 35
@@ -29,6 +29,8 @@ content_image=col2.file_uploader('ff',type=['png','jpg'],label_visibility='hidde
 sub=col2.button('Transfer')
 
 if content_image and style_image:
+    cotent_image=Image.open(content_image)
+    style_image=Image.open(style_image)
     nst_cost = NSTCost(
         content_image.resize(img_size),
         style_image.resize(img_size),
@@ -44,4 +46,5 @@ if content_image and style_image:
         device,
     )
 if sub:
-    nst_cost.fit(1000)
+    img=nst_cost.fit(1000)
+    col1.image(img)
