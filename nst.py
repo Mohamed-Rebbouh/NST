@@ -174,7 +174,7 @@ class NSTCost:
                 msg = "{" + f"loss: {loss.item():.2e}" + "}"
                 progress.update(task, description=msg, advance=1)
         return self.get_generated_img()
-model = models.vgg19(pretrained=True).features.requires_grad_(False).eval().to(device)
+
 
 
 
