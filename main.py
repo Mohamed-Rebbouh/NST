@@ -30,11 +30,11 @@ content_image=col2.file_uploader('ff',type=['png','jpg'],label_visibility='hidde
 sub=col2.button('Transfer')
 
 if content_image and style_image:
-    cotent_image=Image.open(content_image)
-    style_image=Image.open(style_image)
+    cotent_image=Image.open(content_image).resize(img_size)
+    style_image=Image.open(style_image).resize(img_size)
     nst_cost = NSTCost(
-        content_image.resize(img_size),
-        style_image.resize(img_size),
+        content_image,
+        style_image,
         model,
         layers,
         content_layer_idx,
