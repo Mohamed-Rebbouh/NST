@@ -2,7 +2,7 @@ import streamlit as st
 import tempfile
 from torch import optim
 from torchvision import models
-from nst import device,NSTCost,img_size,model
+from nst import device,NSTCost,img_size
 
 model = models.vgg19(pretrained=True).features.requires_grad_(False).eval().to(device)
 layers = list(model.children())
