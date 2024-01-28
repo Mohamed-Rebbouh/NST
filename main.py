@@ -4,9 +4,9 @@ import torchvision
 import torch
 from torch import optim
 from torchvision import models
-from nst import device,NSTCost,img_size
+from nst import device,NSTCost,img_size,model
 
-model = models.vgg19(pretrained=True).features.requires_grad_(False).eval().to(device)
+
 layers = list(model.children())
 
 content_layer_idx = 35
