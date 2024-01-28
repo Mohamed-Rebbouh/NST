@@ -75,7 +75,7 @@ class NSTCost:
             ]
         )
         self.to_tensor = transforms.ToTensor()
-        self.style_resizer = transforms.Resize(content_image.size)
+        self.style_resizer = transforms.Resize(img_size)
         self.style_outputs = self.get_style_outputs(style_img)
         self.content_output = self.get_content_output(content_img)
         self.generated_tensor = self.get_generated_tensor()
