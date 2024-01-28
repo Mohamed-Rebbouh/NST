@@ -19,7 +19,7 @@ style_layer_weights = {
 
 alpha = 1
 beta = 2
-
+st.write(divice)
 col1, col2 = st.columns(spec=2, gap='medium')
 col1.write('<h3>Upload a style image</h3>', unsafe_allow_html=True)
 style_image = col1.file_uploader('Style', type=['png', 'jpg'], label_visibility='hidden')
