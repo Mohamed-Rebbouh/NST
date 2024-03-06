@@ -128,7 +128,15 @@ def gram_matrix(x, should_normalize=True):
         gram /= ch * h * w
     return gram
 
+def numpy_array_to_image(array):
+    # Convert BGR to RGB if needed
+    if len(array.shape) == 3 and array.shape[2] == 3:
+        array = cv.cvtColor(array, cv.COLOR_BGR2RGB)
 
+    # Create image from array
+    image = cv.cvtColor(array, cv.COLOR_RGB2BGR) if len(array.shape) == 3 else array
+
+    return image
 
     
 def TO_img(optimizing_img):
