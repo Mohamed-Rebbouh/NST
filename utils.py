@@ -4,7 +4,7 @@ import torch
 from torchvision import transforms
 import os
 import matplotlib.pyplot as plt
-
+from PIL import Image
 
 from vgg_nets import Vgg19
 
@@ -20,8 +20,8 @@ IMAGENET_STD_NEUTRAL = [1, 1, 1]
 def load_image(img_path, target_shape=None):
     # if not os.path.exists(img_path):
     #     raise Exception(f'Path does not exist: {img_path}')
-    img = cv.imread(img_path)[:, :, ::-1]  # [:, :, ::-1] converts BGR (opencv format...) into RGB
-
+    #img = cv.imread(img_path)[:, :, ::-1]  # [:, :, ::-1] converts BGR (opencv format...) into RGB
+    img=np.array(Image.open(img_path))
     if target_shape is not None:  # resize section
         if isinstance(target_shape, int) and target_shape != -1:  # scalar -> implicitly setting the height
             current_height, current_width = img.shape[:2]
@@ -33,7 +33,7 @@ def load_image(img_path, target_shape=None):
 
     # this need to go after resizing - otherwise cv.resize will push values outside of [0,1] range
     img = img.astype(np.float32)  # convert from uint8 to float32
-    img /= 255.0  # get to [0, 1] range
+    #img /= 255.0  # get to [0, 1] range
     return img
 
 
@@ -44,7 +44,7 @@ def prepare_img(img_path, target_shape, device):
     # [0, 255] range worked much better for me than [0, 1] range (even though PyTorch models were trained on latter)
     transform = transforms.Compose([
         transforms.ToTensor(),
-        transforms.Lambda(lambda x: x.mul(255)),
+        #transforms.Lambda(lambda x: x.mul(255)),
         transforms.Normalize(mean=IMAGENET_MEAN_255, std=IMAGENET_STD_NEUTRAL)
     ])
 
@@ -128,15 +128,9 @@ def gram_matrix(x, should_normalize=True):
         gram /= ch * h * w
     return gram
 
-def numpy_array_to_image(array):
-    # Convert BGR to RGB if needed
-    if len(array.shape) == 3 and array.shape[2] == 3:
-        array = cv.cvtColor(array, cv.COLOR_BGR2RGB)
 
-    # Create image from array
-    image = cv.cvtColor(array, cv.COLOR_RGB2BGR) if len(array.shape) == 3 else array
 
-    return image
+    
 def TO_img(optimizing_img):
     out_img = optimizing_img.squeeze(axis=0).to('cpu').detach().numpy()
     out_img = np.moveaxis(out_img, 0, 2)  # swap channel from 1st to 3rd position: ch, _, _ -> _, _, chr
